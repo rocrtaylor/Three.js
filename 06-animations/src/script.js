@@ -1,8 +1,10 @@
-import './style.css'
-import * as THREE from 'three'
+import "./style.css"
+import * as THREE from "three"
+import gsap from "gsap"
+console.log(gsap)
 
 // Canvas
-const canvas = document.querySelector('canvas.webgl')
+const canvas = document.querySelector("canvas.webgl")
 
 // Scene
 const scene = new THREE.Scene()
@@ -15,8 +17,8 @@ scene.add(mesh)
 
 // Sizes
 const sizes = {
-    width: 800,
-    height: 600
+  width: 800,
+  height: 600,
 }
 
 // Camera
@@ -26,7 +28,19 @@ scene.add(camera)
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
+  canvas: canvas,
 })
 renderer.setSize(sizes.width, sizes.height)
-renderer.render(scene, camera)
+
+//gsap
+gsap.to(mesh.position, { duration: 1, delay: 1, x: 2, y: 1 })
+gsap.to(mesh.position, { duration: 2, delay: 3, x: -2, y: -1 })
+
+// Animations
+const tick = () => {
+  // render
+  renderer.render(scene, camera)
+  window.requestAnimationFrame(tick)
+}
+
+tick()
